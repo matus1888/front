@@ -10,9 +10,11 @@ import {
   Stack,
   TextareaAutosize,
   TextField,
+  Typography,
 } from "@mui/material";
+import { AxiosError } from "axios";
 import { useState } from "react";
-import { Post } from "../../api/postsApi";
+import { createPost, Post } from "../../api/postsApi";
 
 export const CreatePostModal = ({
   isOpen,
@@ -26,7 +28,14 @@ export const CreatePostModal = ({
   const [images, setImages] = useState([]);
 
   const handleEdit = async () => {
-    setIsOpen(false);
+    try {
+      await createPost(formData as Post);
+      setIsOpen(false);
+    } catch (e) {
+      if (e instanceof AxiosError) {
+        console.error(e.response?.data);
+      }
+    }
   };
 
   const removeImage = (index: number) => {
@@ -91,8 +100,10 @@ export const CreatePostModal = ({
                 setFormData({ ...formData, title: e.target.value })
               }
             />
+            <Typography variant="h6">Веедите содержимое поста:</Typography>
             <TextareaAutosize
               value={formData.content}
+              minRows={5}
               onChange={(e) =>
                 setFormData({ ...formData, content: e.target.value })
               }

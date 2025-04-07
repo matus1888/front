@@ -1,4 +1,4 @@
-import { Axios, AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { apiClient } from "./apiClient";
 import { User } from "./profileApi";
 export interface Post {

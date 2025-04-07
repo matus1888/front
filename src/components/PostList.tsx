@@ -3,11 +3,13 @@ import { useQuery } from "@tanstack/react-query";
 import { PostItem } from "./PostItem";
 import { Box, Button, Paper, Typography } from "@mui/material";
 import { fetchPosts } from "../api/postsApi";
+import { CreatePostButton } from "./CreatePostButton";
 
 export const PostList: React.FC = () => {
   const [page, setPage] = useState(1);
   const [sortBy, setSortBy] = useState("new");
-  console.log(setSortBy, page, sortBy);
+  const [isOpen, setIsOpen] = useState(false);
+  const onClick = () => setIsOpen(false);
 
   const { data, isLoading } = useQuery({
     queryKey: ["posts"],
@@ -25,6 +27,7 @@ export const PostList: React.FC = () => {
         <Paper>
           <Typography variant="body1">Пока нет ни одного поста</Typography>
         </Paper>
+        <CreatePostButton />
       </Box>
     );
   }
