@@ -120,30 +120,16 @@ export const CreatePostModal = ({
                 style={{ display: "none" }}
                 id="fileInput"
               />
-              <label
-                htmlFor="fileInput"
-                className="cursor-pointer text-blue-500"
-              >
-                выберите файлы
-              </label>
+              <label htmlFor="fileInput">выберите файлы</label>
             </div>
 
             {/* Предпросмотр изображений */}
-            <div className="mt-4 flex gap-2 flex-wrap">
+            <div>
               {[...images.map((file) => URL.createObjectURL(file))].map(
                 (image, index) => (
                   <div key={index} className="relative">
-                    <img
-                      src={image}
-                      alt={`preview-${index}`}
-                      className="w-24 h-24 object-cover"
-                    />
-                    <button
-                      onClick={() => removeImage(index)}
-                      className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center"
-                    >
-                      ×
-                    </button>
+                    <img src={image} alt={`preview-${index}`} />
+                    <button onClick={() => removeImage(index)}>×</button>
                   </div>
                 ),
               )}
