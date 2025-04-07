@@ -1,3 +1,4 @@
+import { Axios, AxiosError } from "axios";
 import { apiClient } from "./apiClient";
 import { User } from "./profileApi";
 export interface Post {
@@ -24,7 +25,20 @@ export const fetchPosts = async ({ limit, offset, sortBy }: GetPostsParams) => {
     return res.data;
   }
 };
-export const createPost = (data: Post) => apiClient.post("/posts", data);
+
+export const createPost = async (data: Post) => {
+  try {
+    const res = await apiClient.post("/posts", data);
+    if (res) {
+      return res.data;
+    }
+  } catch (e) {
+    if (e instanceof AxiosError) {
+      //TODO
+      console.error(e);
+    }
+  }
+};
 export const updatePost = (id: string, data: any) =>
   apiClient.put(`/posts/${id}`, data);
 export const deletePost = (id: string) => apiClient.delete(`/posts/${id}`);
